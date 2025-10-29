@@ -1,0 +1,23 @@
+<!-- Left Column: Navigation/Project List -->
+<aside class="sidebar">
+  <div class="site-header">
+    <h1 class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
+  </div>
+
+  <nav class="project-nav">
+    <h2 class="nav-title">Projects</h2>
+    <ul class="project-list">
+      {% for post in site.posts %}
+      <li>
+        <a href="{{ post.url | relative_url }}" class="{% if page.url == post.url %}active{% endif %}">
+          {{ post.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <div class="site-footer">
+    <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}</p>
+  </div>
+</aside>
