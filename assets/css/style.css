@@ -243,28 +243,217 @@ html {
   background: #999;
 }
 
-/* Responsive Design */
+/* Responsive Design - Mobile */
 @media (max-width: 968px) {
-  .container {
-    flex-direction: column;
+  html, body {
+    height: 100%;
+    overflow: hidden;
   }
 
+  .container {
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  /* Mobile Header - Horizontal Tabs */
   .sidebar {
     width: 100%;
     height: auto;
+    max-height: 120px;
     border-right: none;
     border-bottom: 1px solid #e0e0e0;
-    padding: 30px 20px;
+    padding: 0;
+    overflow-y: visible;
+    flex-direction: row;
+    align-items: center;
   }
 
+  .site-header {
+    margin-bottom: 0;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    width: 100%;
+  }
+
+  .site-title {
+    font-size: 16px;
+  }
+
+  .site-footer {
+    display: none;
+  }
+
+  /* Horizontal Project Tabs */
+  .project-nav {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex: 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .project-nav::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  .nav-title {
+    display: none;
+  }
+
+  .project-list {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    padding: 0 10px;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .project-list li {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .project-list a {
+    display: inline-block;
+    padding: 12px 16px;
+    font-size: 14px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+  }
+
+  .project-list a:hover,
+  .project-list a.active {
+    opacity: 1;
+    border-bottom-color: #000;
+  }
+
+  /* Mobile Content Area */
   .content {
     width: 100%;
-    height: auto;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
-  .gallery,
+  /* Mobile Gallery - Horizontal Scroll */
+  .gallery {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-item {
+    flex-shrink: 0;
+    width: 90vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: center;
+    padding: 20px;
+  }
+
+  .gallery-item a {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-item img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Mobile Post Content - Horizontal Scroll */
   .post-content {
-    padding: 30px 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .post-images {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 100%;
+    flex: 1;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .post-images::-webkit-scrollbar {
+    display: none;
+  }
+
+  .image-container {
+    flex-shrink: 0;
+    width: 90vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: center;
+    padding: 20px;
+  }
+
+  .image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .post-text {
+    display: none;
+  }
+
+  /* Mobile Scroll Indicators */
+  .gallery::after,
+  .post-images::after {
+    content: '→';
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    animation: swipeHint 2s ease-in-out infinite;
+  }
+
+  @keyframes swipeHint {
+    0%, 100% {
+      opacity: 0.3;
+      transform: translateY(-50%) translateX(0);
+    }
+    50% {
+      opacity: 0.6;
+      transform: translateY(-50%) translateX(5px);
+    }
   }
 }
 

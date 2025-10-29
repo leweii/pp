@@ -4,13 +4,23 @@ A minimal Jekyll-based photography portfolio with progressive image loading, blu
 
 ## Features
 
-- **Two-column layout**: 1/3 navigation sidebar, 2/3 content area
+### Desktop
+- **Two-column layout**: 1/3 navigation sidebar, 2/3 content area (vertical scroll)
 - **Progressive image loading**: Images load with smooth blur-to-sharp transition
+- **Full-width layout**: Uses entire browser width
+
+### Mobile
+- **Horizontal tab navigation**: Projects displayed as swipeable tabs at the top
+- **Horizontal scroll galleries**: Swipe left/right through images
+- **Scroll snap**: Smooth snapping to each image
+- **Touch-optimized**: Native swipe gestures with momentum scrolling
+- **Auto-scroll active tab**: Currently selected project scrolls into view
+
+### All Devices
 - **CDN support**: Seamlessly works with CDN-hosted images
 - **Flexible URL configuration**: Support for custom domains and subpaths
-- **Responsive design**: Adapts to mobile and desktop screens
-- **Smooth animations**: Elegant transitions and page loads
-- **Full-width layout**: Uses entire browser width
+- **Progressive blur loading**: Smooth blur-to-sharp image transitions
+- **Responsive design**: Optimized layouts for desktop, tablet, and mobile
 
 ## Installation
 

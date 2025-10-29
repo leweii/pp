@@ -133,6 +133,62 @@
   }
 
   /**
+   * Mobile horizontal scroll enhancements
+   */
+  function initMobileScrolling() {
+    if (window.innerWidth > 968) return; // Desktop only
+
+    const gallery = document.querySelector('.gallery');
+    const postImages = document.querySelector('.post-images');
+    const scrollContainer = gallery || postImages;
+
+    if (!scrollContainer) return;
+
+    // Hide scroll indicator after first interaction
+    let interacted = false;
+    const hideIndicator = () => {
+      if (!interacted) {
+        interacted = true;
+        scrollContainer.style.setProperty('--show-indicator', 'none');
+      }
+    };
+
+    scrollContainer.addEventListener('scroll', hideIndicator, { once: true });
+    scrollContainer.addEventListener('touchstart', hideIndicator, { once: true });
+
+    // Smooth scroll snap for better UX
+    scrollContainer.addEventListener('touchend', () => {
+      const scrollLeft = scrollContainer.scrollLeft;
+      const itemWidth = scrollContainer.children[0]?.offsetWidth || window.innerWidth * 0.9;
+      const targetIndex = Math.round(scrollLeft / itemWidth);
+      const targetScroll = targetIndex * itemWidth;
+
+      scrollContainer.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    });
+  }
+
+  /**
+   * Scroll active tab into view on mobile
+   */
+  function scrollActiveTabIntoView() {
+    if (window.innerWidth > 968) return;
+
+    const activeLink = document.querySelector('.project-list a.active');
+    if (activeLink) {
+      setTimeout(() => {
+        activeLink.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
+      }, 100);
+    }
+  }
+
+  /**
    * Initialize all functionality
    */
   function init() {
@@ -143,12 +199,16 @@
         initSmoothScroll();
         initNavigation();
         initPageTransition();
+        initMobileScrolling();
+        scrollActiveTabIntoView();
       });
     } else {
       initLazyLoading();
       initSmoothScroll();
       initNavigation();
       initPageTransition();
+      initMobileScrolling();
+      scrollActiveTabIntoView();
     }
   }
 
