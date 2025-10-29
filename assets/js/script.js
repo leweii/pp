@@ -133,41 +133,14 @@
   }
 
   /**
-   * Mobile horizontal scroll enhancements
+   * Mobile scroll enhancements (vertical scrolling for content)
    */
   function initMobileScrolling() {
     if (window.innerWidth > 968) return; // Desktop only
 
-    const gallery = document.querySelector('.gallery');
-    const postImages = document.querySelector('.post-images');
-    const scrollContainer = gallery || postImages;
-
-    if (!scrollContainer) return;
-
-    // Hide scroll indicator after first interaction
-    let interacted = false;
-    const hideIndicator = () => {
-      if (!interacted) {
-        interacted = true;
-        scrollContainer.style.setProperty('--show-indicator', 'none');
-      }
-    };
-
-    scrollContainer.addEventListener('scroll', hideIndicator, { once: true });
-    scrollContainer.addEventListener('touchstart', hideIndicator, { once: true });
-
-    // Smooth scroll snap for better UX
-    scrollContainer.addEventListener('touchend', () => {
-      const scrollLeft = scrollContainer.scrollLeft;
-      const itemWidth = scrollContainer.children[0]?.offsetWidth || window.innerWidth * 0.9;
-      const targetIndex = Math.round(scrollLeft / itemWidth);
-      const targetScroll = targetIndex * itemWidth;
-
-      scrollContainer.scrollTo({
-        left: targetScroll,
-        behavior: 'smooth'
-      });
-    });
+    // Mobile now uses vertical scrolling for images
+    // Smooth scrolling is handled by CSS -webkit-overflow-scrolling: touch
+    // No additional JavaScript needed for vertical scroll
   }
 
   /**
