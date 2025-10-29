@@ -6,7 +6,7 @@ description: 一个摄影爱好者
 # For root domain: url: "https://yourdomain.com" and baseurl: ""
 # For subdirectory: url: "https://yourdomain.com" and baseurl: "/portfolio"
 # For GitHub Pages: url: "https://username.github.io" and baseurl: "/repo-name"
-url: "https://img.jakobhe.com" # Your domain, e.g., "https://yourdomain.com"
+url: "https://www.jakobhe.com" # Your domain, e.g., "https://yourdomain.com"
 baseurl: "/pp" # Subpath, e.g., "/portfolio" or "" for root
 
 # CDN Configuration
@@ -14,7 +14,7 @@ baseurl: "/pp" # Subpath, e.g., "/portfolio" or "" for root
 # Example: cdn_url: "https://cdn.yourdomain.com"
 # Example: cdn_url: "https://your-bucket.s3.amazonaws.com"
 # Leave empty if images use full URLs or relative paths
-cdn_url: ""
+cdn_url: "https://img.jakobhe.com"
 
 # Build settings
 markdown: kramdown
