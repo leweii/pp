@@ -33,3 +33,8 @@ exclude:
   - .bundle/
   - README.md
   - node_modules/
+
+# Include files that start with dots
+include:
+  - .htaccess
+  - .well-known

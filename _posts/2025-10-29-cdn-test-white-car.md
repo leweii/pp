@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "White Car(Test)"
-date: 2025-10-29
+date: 2025-10-29 10:00:00
 # Images support three formats:
 # 1. Full URLs (will be used as-is)
 # 2. CDN relative paths (will be prefixed with cdn_url from _config.yml)

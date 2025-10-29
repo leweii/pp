@@ -8,7 +8,7 @@
 
   // Configuration
   const config = {
-    rootMargin: '50px',
+    rootMargin: '200px',
     threshold: 0.01,
     blurAmount: 20,
     transitionDuration: 800
@@ -18,29 +18,38 @@
    * Load image with blur effect
    */
   function loadImage(img) {
+    const imageSrc = img.getAttribute('src');
+    const container = img.closest('.image-container, .gallery-item');
+    
+    // If image already has src and is loaded, mark as loaded
+    if (img.complete && img.naturalHeight !== 0) {
+      img.classList.remove('loading');
+      img.classList.add('loaded');
+      if (container) container.classList.add('loaded');
+      return;
+    }
+
     // Add loading class
     img.classList.add('loading');
-
-    // Create a new image to preload
-    const imageLoader = new Image();
-
-    imageLoader.onload = function() {
-      // Wait a tiny bit to ensure smooth transition
-      setTimeout(() => {
-        img.src = imageLoader.src;
-        img.classList.remove('loading');
-        img.classList.add('loaded');
-      }, 100);
+    
+    // Simple approach: just mark as loaded when image loads
+    img.onload = function() {
+      img.classList.remove('loading');
+      img.classList.add('loaded');
+      if (container) container.classList.add('loaded');
     };
-
-    imageLoader.onerror = function() {
-      // Handle error - remove loading state
+    
+    img.onerror = function() {
       img.classList.remove('loading');
       img.classList.add('error');
+      if (container) container.classList.add('error');
+      console.error('Failed to load image:', imageSrc);
     };
-
-    // Start loading the image
-    imageLoader.src = img.src;
+    
+    // If src is not set, set it now
+    if (!img.src || img.src === '') {
+      img.src = imageSrc;
+    }
   }
 
   /**
@@ -70,10 +79,18 @@
     });
 
     // Observe all lazy images
-    images.forEach(img => {
+    images.forEach((img, index) => {
       // Check if image is already loaded (cached)
       if (img.complete && img.naturalHeight !== 0) {
         img.classList.add('loaded');
+        const container = img.closest('.image-container, .gallery-item');
+        if (container) container.classList.add('loaded');
+        return;
+      }
+
+      // Load first 2-3 images immediately (above the fold)
+      if (index < 3) {
+        loadImage(img);
       } else {
         imageObserver.observe(img);
       }
@@ -162,9 +179,29 @@
   }
 
   /**
+   * Register Service Worker for image caching
+   */
+  function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/pp/sw.js')
+          .then((registration) => {
+            console.log('Service Worker registered successfully:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('Service Worker registration failed:', error);
+          });
+      });
+    }
+  }
+
+  /**
    * Initialize all functionality
    */
   function init() {
+    // Register service worker for caching
+    registerServiceWorker();
+
     // Wait for DOM to be ready
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
