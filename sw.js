@@ -1,6 +1,6 @@
 // Service Worker for Image Caching
-const CACHE_NAME = 'portfolio-cache-v1';
-const IMAGE_CACHE = 'portfolio-images-v1';
+const CACHE_NAME = 'portfolio-cache-v2';
+const IMAGE_CACHE = 'portfolio-images-v2';
 
 // Install event - cache essential files
 self.addEventListener('install', (event) => {
@@ -36,6 +36,11 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
+
+  // Only handle http and https requests
+  if (!url.protocol.startsWith('http')) {
+    return;
+  }
 
   // Cache images with cache-first strategy
   if (request.destination === 'image' || /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url.pathname)) {
