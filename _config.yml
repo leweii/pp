@@ -6,7 +6,7 @@ description: 一个摄影爱好者
 # For root domain: url: "https://yourdomain.com" and baseurl: ""
 # For subdirectory: url: "https://yourdomain.com" and baseurl: "/portfolio"
 # For GitHub Pages: url: "https://username.github.io" and baseurl: "/repo-name"
-url: "" # Your domain, e.g., "https://yourdomain.com"
+url: "https://img.jakobhe.com" # Your domain, e.g., "https://yourdomain.com"
 baseurl: "/pp" # Subpath, e.g., "/portfolio" or "" for root
 
 # CDN Configuration
