@@ -13,9 +13,7 @@
 {%- if img_src contains 'http://' or img_src contains 'https://' -%}
   {{- img_src -}}
 {%- elsif site.cdn_url != '' and site.cdn_url != nil -%}
-  {%- assign cdn_base = site.cdn_url | remove: '/' -%}
-  {%- assign img_path = img_src | remove_first: '/' -%}
-  {{- cdn_base -}}/{{- img_path -}}
+  {{- site.cdn_url -}}{{- img_src -}}
 {%- else -%}
   {{- img_src -}}
 {%- endif -%}
