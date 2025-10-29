@@ -1,0 +1,79 @@
+# Photography Portfolio Configuration Example
+# Copy this file to _config.yml and customize
+
+# Site settings
+title: Your Name
+description: Photography Portfolio
+
+# URL Configuration
+# Choose one of the following configurations:
+
+# OPTION 1: Root Domain
+url: "https://yourdomain.com"
+baseurl: ""
+
+# OPTION 2: Subdirectory
+# url: "https://yourdomain.com"
+# baseurl: "/portfolio"
+
+# OPTION 3: GitHub Pages
+# url: "https://username.github.io"
+# baseurl: "/repo-name"
+
+# CDN Configuration
+# Set your CDN base URL. Images with relative paths will be prefixed with this URL.
+
+# EXAMPLE 1: AWS CloudFront
+# cdn_url: "https://d1234567890.cloudfront.net"
+
+# EXAMPLE 2: Custom CDN domain
+# cdn_url: "https://cdn.yoursite.com"
+
+# EXAMPLE 3: S3 bucket direct access
+# cdn_url: "https://your-bucket.s3.amazonaws.com"
+
+# EXAMPLE 4: No CDN (use full URLs in posts)
+cdn_url: ""
+
+# Build settings
+markdown: kramdown
+permalink: /:title/
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
+  - README.md
+  - node_modules/
+  - _config.example.yml
+
+# ============================================
+# IMAGE PATH EXAMPLES
+# ============================================
+#
+# In your posts (_posts/*.md), you can use three types of image paths:
+#
+# 1. FULL URLs (used as-is):
+#    images:
+#      - https://cdn.example.com/image1.jpg
+#      - https://cdn.example.com/image2.jpg
+#
+# 2. CDN RELATIVE PATHS (prefixed with cdn_url):
+#    Set cdn_url above, then use:
+#    images:
+#      - projects/urban/image1.jpg
+#      - projects/urban/image2.jpg
+#    Result: https://cdn.example.com/projects/urban/image1.jpg
+#
+# 3. SITE RELATIVE PATHS (for local images):
+#    images:
+#      - /assets/images/photo1.jpg
+#      - /assets/images/photo2.jpg
+#    Result: /baseurl/assets/images/photo1.jpg

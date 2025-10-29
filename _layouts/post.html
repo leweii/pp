@@ -8,7 +8,7 @@ layout: default
       {% for image in page.images %}
       <figure class="image-container">
         <img
-          src="{{ image }}"
+          src="{% include image-url.html src=image %}"
           alt="{{ page.title }}"
           class="lazy-image"
           loading="lazy"

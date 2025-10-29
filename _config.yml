@@ -1,8 +1,20 @@
 # Site settings
-title: Your Name
-description: Photography Portfolio
-baseurl: ""
-url: ""
+title: 何乐为
+description: 一个摄影爱好者
+
+# URL Configuration
+# For root domain: url: "https://yourdomain.com" and baseurl: ""
+# For subdirectory: url: "https://yourdomain.com" and baseurl: "/portfolio"
+# For GitHub Pages: url: "https://username.github.io" and baseurl: "/repo-name"
+url: "" # Your domain, e.g., "https://yourdomain.com"
+baseurl: "/pp" # Subpath, e.g., "/portfolio" or "" for root
+
+# CDN Configuration
+# Set your CDN base URL here. All image paths in posts will be prefixed with this URL.
+# Example: cdn_url: "https://cdn.yourdomain.com"
+# Example: cdn_url: "https://your-bucket.s3.amazonaws.com"
+# Leave empty if images use full URLs or relative paths
+cdn_url: ""
 
 # Build settings
 markdown: kramdown

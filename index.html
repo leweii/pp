@@ -10,7 +10,7 @@ title: Home
       <figure class="gallery-item">
         <a href="{{ post.url | relative_url }}">
           <img
-            src="{{ first_image }}"
+            src="{% include image-url.html src=first_image %}"
             alt="{{ post.title }}"
             class="lazy-image"
             loading="lazy"

@@ -1,0 +1,21 @@
+{% comment %}
+  Smart Image URL Generator
+  Usage: {% include image-url.html src=image %}
+
+  This include will:
+  1. Use the full URL if the image starts with http:// or https://
+  2. Prepend cdn_url if configured and image is a relative path
+  3. Otherwise use the image path as-is
+{% endcomment %}
+
+{%- assign img_src = include.src -%}
+
+{%- if img_src contains 'http://' or img_src contains 'https://' -%}
+  {{- img_src -}}
+{%- elsif site.cdn_url != '' and site.cdn_url != nil -%}
+  {%- assign cdn_base = site.cdn_url | remove: '/' -%}
+  {%- assign img_path = img_src | remove_first: '/' -%}
+  {{- cdn_base -}}/{{- img_path -}}
+{%- else -%}
+  {{- img_src -}}
+{%- endif -%}
