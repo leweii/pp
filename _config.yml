@@ -1,0 +1,23 @@
+# Site settings
+title: Your Name
+description: Photography Portfolio
+baseurl: ""
+url: ""
+
+# Build settings
+markdown: kramdown
+permalink: /:title/
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
+  - README.md
+  - node_modules/

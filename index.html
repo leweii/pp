@@ -1,0 +1,22 @@
+---
+layout: default
+title: Home
+---
+
+<div class="gallery">
+  {% for post in site.posts %}
+    {% if post.images %}
+      {% assign first_image = post.images[0] %}
+      <figure class="gallery-item">
+        <a href="{{ post.url | relative_url }}">
+          <img
+            src="{{ first_image }}"
+            alt="{{ post.title }}"
+            class="lazy-image"
+            loading="lazy"
+          >
+        </a>
+      </figure>
+    {% endif %}
+  {% endfor %}
+</div>
