@@ -70,11 +70,17 @@ body {
 .site-title a:active {
   color: #000;
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  position: relative;
+  display: inline-block;
+  background-image: linear-gradient(to right, #000 0%, #000 100%);
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .site-title a:hover {
-  opacity: 0.6;
+  background-size: 100% 3px;
 }
 
 /* Project Navigation */
@@ -108,14 +114,22 @@ body {
   font-size: 15px;
   font-weight: 400;
   line-height: 1.5;
-  display: block;
-  transition: opacity 0.3s ease;
+  display: inline-block;
+  position: relative;
+  background-image: linear-gradient(to right, #000 0%, #000 100%);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   letter-spacing: -0.01em;
 }
 
-.project-list a:hover,
+.project-list a:hover {
+  background-size: 100% 4px;
+}
+
 .project-list a.active {
-  opacity: 0.5;
+  background-size: 100% 2px;
 }
 
 /* Site Footer */
@@ -150,6 +164,29 @@ body {
   display: block;
   color: inherit;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item a:hover {
+  transform: scale(1.02);
+}
+
+.gallery-item a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(to right, #000 0%, #333 100%);
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item a:hover::after {
+  transform: translateY(0);
 }
 
 .gallery-item img {
@@ -235,12 +272,19 @@ body {
 .post-description a:active {
   color: #000;
   text-decoration: none;
-  border-bottom: 1px solid #ccc;
-  transition: border-color 0.2s ease;
+  position: relative;
+  display: inline;
+  background-image: linear-gradient(to right, #ccc 0%, #ccc 100%);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .post-description a:hover {
-  border-bottom-color: #000;
+  background-image: linear-gradient(to right, #000 0%, #000 100%);
+  background-size: 100% 5px;
+  padding-bottom: 2px;
 }
 
 /* Progressive Image Loading with Blur Effect */
@@ -403,13 +447,17 @@ html {
     letter-spacing: -0.01em;
     color: #000;
     border-bottom: 2px solid transparent;
-    transition: border-color 0.3s ease, opacity 0.3s ease;
+    background-image: none;
+    background-size: 0;
+    transition: border-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .project-list a:hover,
+  .project-list a:hover {
+    border-bottom: 5px solid #000;
+  }
+
   .project-list a.active {
-    opacity: 1;
-    border-bottom-color: #000;
+    border-bottom: 3px solid #000;
   }
 
   /* Mobile Content Area */
@@ -441,6 +489,29 @@ html {
     display: block;
     color: inherit;
     text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .gallery-item a:active {
+    transform: scale(0.98);
+  }
+
+  .gallery-item a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, #000 0%, #333 100%);
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .gallery-item a:active::after {
+    transform: translateY(0);
   }
 
   .gallery-item img {
