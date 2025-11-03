@@ -86,13 +86,13 @@
     overlay.innerHTML = `
       <div class="auth-container">
         <div class="auth-box">
-          <h1 class="auth-title">🔒 Protected Content</h1>
-          <p class="auth-description">Please enter the password to access this site</p>
+          <h1 class="auth-title">🔒 *内部交流*</h1>
+          <p class="auth-description">Speak 'friend' and enter.(“朋友”的精灵语是 “Mellon”)</p>
           <form id="auth-form">
             <input 
               type="password" 
               id="auth-password" 
-              placeholder="Enter password"
+              placeholder="パスワードを入力"
               autocomplete="current-password"
               required
             >
