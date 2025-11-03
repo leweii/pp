@@ -10,7 +10,7 @@
     // SHA-256 hash of your password
     // To generate: Open browser console and run: crypto.subtle.digest('SHA-256', new TextEncoder().encode('yourpassword')).then(h => console.log(Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2, '0')).join('')))
     // Default password is "password" - CHANGE THIS!
-    passwordHash: '1acb376ca3328d3d2abf6aad46fa892d359b4b16673987d54e5ac532d895d779',
+    passwordHash: 'c58557fcfe37300200790917ea2cb9b27a015de83d02297f80d84fbe9caa44f9',
     sessionKey: 'siteAuthToken',
     sessionDuration: 24 * 60 * 60 * 1000 // 24 hours in milliseconds
   };
