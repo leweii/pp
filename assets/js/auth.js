@@ -86,19 +86,19 @@
     overlay.innerHTML = `
       <div class="auth-container">
         <div class="auth-box">
-          <h1 class="auth-title">🔒 *内部交流*</h1>
-          <p class="auth-description">Speak 'friend' and enter.(“朋友”的精灵语是 “Mellon”)</p>
+          <h1 class="auth-title">🔒 *仅供内部交流*</h1>
+          <p class="auth-description">Speak 'friend' and enter.</br>(“朋友”的精灵语是 “Mellon”)</p>
           <form id="auth-form">
             <input 
               type="password" 
               id="auth-password" 
-              placeholder="パスワードを入力"
+              placeholder=""
               autocomplete="current-password"
               required
             >
             <button type="submit" id="auth-submit">Unlock</button>
           </form>
-          <p id="auth-error" class="auth-error" style="display: none;">Incorrect password. Please try again.</p>
+          <p id="auth-error" class="auth-error" style="display: none;">Speak 'friend'！！</p>
         </div>
       </div>
     `;
