@@ -199,26 +199,47 @@
    * Default background configuration
    */
   const defaultBgConfig = {
-    targetArea: 70,
+    targetArea: 800,        // Increased for better performance (was 70)
     colorProb: 0.008,
-    gridSize: 3,
+    gridSize: 5,            // Increased for better performance (was 3)
     strokeWidth: 0.3,
     minOpacity: 0.015,
     maxOpacity: 0.04,
-    coloredOpacity: 0.05
+    coloredOpacity: 0.05,
+    relaxationIterations: 2, // Lloyd's relaxation iterations for uniform areas
+    minEdges: 4,            // Minimum polygon edges
+    maxEdges: 8             // Maximum polygon edges
   };
 
   /**
    * Generate Voronoi diagram for Chinese celadon crackle pattern
    * 使用泰森多边形算法生成中国青瓷开片纹理
+   * With Lloyd's relaxation for uniform cell areas
    */
   function generateVoronoiPattern(width, height, numSites, config = defaultBgConfig) {
     // Generate random sites (seed points)
-    const sites = [];
+    let sites = [];
     for (let i = 0; i < numSites; i++) {
       sites.push({
         x: Math.random() * width,
         y: Math.random() * height
+      });
+    }
+
+    // Apply Lloyd's relaxation to make areas more uniform
+    for (let iteration = 0; iteration < config.relaxationIterations; iteration++) {
+      const cellPoints = assignPointsToSites(sites, width, height, config.gridSize);
+
+      // Move each site to the centroid of its cell
+      sites = sites.map((site, index) => {
+        const points = cellPoints.get(index);
+        if (!points || points.length === 0) return site;
+
+        const centroid = calculateCentroid(points);
+        return {
+          x: Math.max(0, Math.min(width, centroid.x)),
+          y: Math.max(0, Math.min(height, centroid.y))
+        };
       });
     }
 
@@ -274,34 +295,8 @@
     // Create SVG
     let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`;
 
-    // Generate Voronoi cells using simple approach
-    const gridSize = config.gridSize;
-    const pixels = new Map();
-
-    // Assign each pixel to nearest site
-    for (let x = 0; x < width; x += gridSize) {
-      for (let y = 0; y < height; y += gridSize) {
-        let minDist = Infinity;
-        let nearestSite = 0;
-
-        for (let i = 0; i < sites.length; i++) {
-          const dx = x - sites[i].x;
-          const dy = y - sites[i].y;
-          const dist = dx * dx + dy * dy;
-
-          if (dist < minDist) {
-            minDist = dist;
-            nearestSite = i;
-          }
-        }
-
-        const key = nearestSite;
-        if (!pixels.has(key)) {
-          pixels.set(key, []);
-        }
-        pixels.get(key).push({x, y});
-      }
-    }
+    // Generate final Voronoi cells
+    const pixels = assignPointsToSites(sites, width, height, config.gridSize);
 
     // Draw polygons
     pixels.forEach((points, siteIndex) => {
@@ -310,6 +305,10 @@
       // Calculate convex hull of points to form polygon
       const hull = convexHull(points);
       if (hull.length < 3) return;
+
+      // Filter by edge count - skip if outside configured range
+      if (config.minEdges && hull.length < config.minEdges) return;
+      if (config.maxEdges && hull.length > config.maxEdges) return;
 
       // Determine color - configurable chance for vibrant colors!
       const isColored = Math.random() < config.colorProb;
@@ -342,6 +341,58 @@
 
     svg += '</svg>';
     return svg;
+  }
+
+  /**
+   * Assign pixels to nearest sites (Voronoi tessellation)
+   */
+  function assignPointsToSites(sites, width, height, gridSize) {
+    const pixels = new Map();
+
+    for (let x = 0; x < width; x += gridSize) {
+      for (let y = 0; y < height; y += gridSize) {
+        let minDist = Infinity;
+        let nearestSite = 0;
+
+        for (let i = 0; i < sites.length; i++) {
+          const dx = x - sites[i].x;
+          const dy = y - sites[i].y;
+          const dist = dx * dx + dy * dy;
+
+          if (dist < minDist) {
+            minDist = dist;
+            nearestSite = i;
+          }
+        }
+
+        if (!pixels.has(nearestSite)) {
+          pixels.set(nearestSite, []);
+        }
+        pixels.get(nearestSite).push({x, y});
+      }
+    }
+
+    return pixels;
+  }
+
+  /**
+   * Calculate centroid (center of mass) of a set of points
+   */
+  function calculateCentroid(points) {
+    if (points.length === 0) return {x: 0, y: 0};
+
+    let sumX = 0;
+    let sumY = 0;
+
+    for (let p of points) {
+      sumX += p.x;
+      sumY += p.y;
+    }
+
+    return {
+      x: sumX / points.length,
+      y: sumY / points.length
+    };
   }
 
   /**
@@ -456,6 +507,7 @@
    */
   function init() {
     // Generate random background immediately
+    // Now with Lloyd's relaxation and optimized defaults
     initRandomBackground();
 
     // Register service worker for caching

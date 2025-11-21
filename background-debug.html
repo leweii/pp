@@ -162,9 +162,9 @@ permalink: /background-debug/
     <div class="control-group">
       <label class="control-label">
         <span>Cell Size (Target Area)</span>
-        <span class="control-value" id="value-targetArea">70</span>
+        <span class="control-value" id="value-targetArea">800</span>
       </label>
-      <input type="range" class="slider" id="targetArea" min="20" max="500" value="70" step="10">
+      <input type="range" class="slider" id="targetArea" min="20" max="2000" value="800" step="20">
       <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
         Smaller = more dense cells
       </p>
@@ -184,9 +184,9 @@ permalink: /background-debug/
     <div class="control-group">
       <label class="control-label">
         <span>Grid Size (Performance)</span>
-        <span class="control-value" id="value-gridSize">3</span>
+        <span class="control-value" id="value-gridSize">5</span>
       </label>
-      <input type="range" class="slider" id="gridSize" min="1" max="10" value="3" step="1">
+      <input type="range" class="slider" id="gridSize" min="1" max="15" value="5" step="1">
       <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
         Higher = faster but less precise
       </p>
@@ -235,6 +235,39 @@ permalink: /background-debug/
         Opacity for colored cells
       </p>
     </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        <span>Relaxation Iterations</span>
+        <span class="control-value" id="value-relaxationIterations">2</span>
+      </label>
+      <input type="range" class="slider" id="relaxationIterations" min="0" max="5" value="2" step="1">
+      <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+        Lloyd's relaxation for uniform areas (0=off, higher=more uniform but slower)
+      </p>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        <span>Min Polygon Edges</span>
+        <span class="control-value" id="value-minEdges">4</span>
+      </label>
+      <input type="range" class="slider" id="minEdges" min="3" max="6" value="4" step="1">
+      <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+        Minimum number of polygon sides
+      </p>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        <span>Max Polygon Edges</span>
+        <span class="control-value" id="value-maxEdges">8</span>
+      </label>
+      <input type="range" class="slider" id="maxEdges" min="6" max="12" value="8" step="1">
+      <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+        Maximum number of polygon sides
+      </p>
+    </div>
   </div>
 
   <div class="button-group">
@@ -262,13 +295,16 @@ permalink: /background-debug/
 
   // Default configuration
   const defaultConfig = {
-    targetArea: 70,
+    targetArea: 800,
     colorProb: 0.008,
-    gridSize: 3,
+    gridSize: 5,
     strokeWidth: 0.3,
     minOpacity: 0.015,
     maxOpacity: 0.04,
-    coloredOpacity: 0.05
+    coloredOpacity: 0.05,
+    relaxationIterations: 2,
+    minEdges: 4,
+    maxEdges: 8
   };
 
   let currentConfig = { ...defaultConfig };
@@ -282,6 +318,9 @@ permalink: /background-debug/
     document.getElementById('value-minOpacity').textContent = currentConfig.minOpacity.toFixed(3);
     document.getElementById('value-maxOpacity').textContent = currentConfig.maxOpacity.toFixed(3);
     document.getElementById('value-coloredOpacity').textContent = currentConfig.coloredOpacity.toFixed(3);
+    document.getElementById('value-relaxationIterations').textContent = currentConfig.relaxationIterations;
+    document.getElementById('value-minEdges').textContent = currentConfig.minEdges;
+    document.getElementById('value-maxEdges').textContent = currentConfig.maxEdges;
 
     // Update screen info
     const width = window.innerWidth;
@@ -293,7 +332,7 @@ permalink: /background-debug/
 
   // Setup slider listeners
   function setupSliders() {
-    const sliders = ['targetArea', 'colorProb', 'gridSize', 'strokeWidth', 'minOpacity', 'maxOpacity', 'coloredOpacity'];
+    const sliders = ['targetArea', 'colorProb', 'gridSize', 'strokeWidth', 'minOpacity', 'maxOpacity', 'coloredOpacity', 'relaxationIterations', 'minEdges', 'maxEdges'];
 
     sliders.forEach(key => {
       const slider = document.getElementById(key);
@@ -301,6 +340,10 @@ permalink: /background-debug/
         let value = parseFloat(e.target.value);
         if (key === 'colorProb') {
           value = value / 100; // Convert percentage to decimal
+        }
+        // Convert to integer for these parameters
+        if (key === 'relaxationIterations' || key === 'minEdges' || key === 'maxEdges' || key === 'targetArea' || key === 'gridSize') {
+          value = Math.round(value);
         }
         currentConfig[key] = value;
         updateValueDisplays();
@@ -379,6 +422,9 @@ permalink: /background-debug/
     document.getElementById('minOpacity').value = defaultConfig.minOpacity;
     document.getElementById('maxOpacity').value = defaultConfig.maxOpacity;
     document.getElementById('coloredOpacity').value = defaultConfig.coloredOpacity;
+    document.getElementById('relaxationIterations').value = defaultConfig.relaxationIterations;
+    document.getElementById('minEdges').value = defaultConfig.minEdges;
+    document.getElementById('maxEdges').value = defaultConfig.maxEdges;
 
     updateValueDisplays();
     showStatus('🔄 Reset to default configuration', 'info');
