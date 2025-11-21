@@ -1,0 +1,36 @@
+---
+layout: default
+title: Projects
+permalink: /projects/
+---
+
+<div class="projects-grid">
+  {% for post in site.posts %}
+    {% if post.images %}
+      {% assign first_image = post.images[0] %}
+      <article class="project-card">
+        <a href="{{ post.url | relative_url }}" class="project-link">
+          <div class="project-thumbnail">
+            <img
+              src="{% include image-url.html src=first_image %}"
+              alt="{{ post.title }}"
+              class="lazy-image"
+              loading="lazy"
+            >
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">{{ post.title }}</h3>
+            {% if post.date %}
+            <time class="project-date">{{ post.date | date: "%Y" }}</time>
+            {% endif %}
+            {% if post.excerpt %}
+            <div class="project-excerpt">
+              {{ post.excerpt | strip_html | truncate: 120 }}
+            </div>
+            {% endif %}
+          </div>
+        </a>
+      </article>
+    {% endif %}
+  {% endfor %}
+</div>

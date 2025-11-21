@@ -5,7 +5,11 @@
   </div>
 
   <nav class="project-nav">
-    <h2 class="nav-title">Projects</h2>
+    <h2 class="nav-title">
+      <a href="{{ '/projects/' | relative_url }}" class="nav-title-link {% if page.url == '/projects/' %}active{% endif %}">
+        Projects
+      </a>
+    </h2>
     <ul class="project-list">
       {% for post in site.posts %}
       <li>
@@ -15,6 +19,12 @@
       </li>
       {% endfor %}
     </ul>
+
+    <h2 class="nav-title" style="margin-top: 40px;">
+      <a href="{{ '/about/' | relative_url }}" class="nav-title-link {% if page.url == '/about/' %}active{% endif %}">
+        About
+      </a>
+    </h2>
   </nav>
 
   <div class="site-footer">
