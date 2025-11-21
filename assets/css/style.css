@@ -568,50 +568,69 @@ html {
     display: none;
   }
 
-  /* Horizontal Project Tabs */
+  /* Vertical Navigation Menu */
   .project-nav {
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
     flex-shrink: 0;
+    padding: 10px 0;
+    max-height: 60vh;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-  }
-
-  .project-nav::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
   }
 
   .nav-title {
-    display: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    padding: 12px 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+  }
+
+  .nav-title-link,
+  .nav-title-link:link,
+  .nav-title-link:visited,
+  .nav-title-link:active {
+    color: #0f172a;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .nav-title-link:hover {
+    color: #64748b;
+  }
+
+  .nav-title-link.active {
+    color: #0f172a;
+    font-weight: 600;
   }
 
   .project-list {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 0;
-    padding: 0 10px;
-    white-space: nowrap;
-    margin: 0;
+    padding: 0;
+    margin: 0 0 20px 0;
+    list-style: none;
   }
 
   .project-list li {
     margin-bottom: 0;
-    flex-shrink: 0;
+    border-left: 3px solid transparent;
   }
 
   .project-list a,
   .project-list a:link,
   .project-list a:visited,
   .project-list a:active {
-    display: inline-block;
-    padding: 14px 18px;
-    font-size: 16px;
+    display: block;
+    padding: 10px 20px 10px 30px;
+    font-size: 15px;
     font-weight: 400;
     letter-spacing: -0.01em;
     color: #334155;
-    border-bottom: 2px solid transparent;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition: color 0.2s ease, background-color 0.2s ease;
   }
 
   .project-list a::after {
@@ -620,12 +639,16 @@ html {
 
   .project-list a:hover {
     color: #0f172a;
-    border-bottom-color: #cbd5e1;
+    background-color: #f8f9fa;
+  }
+
+  .project-list li:has(a.active) {
+    border-left-color: #0f172a;
+    background-color: #f8f9fa;
   }
 
   .project-list a.active {
     color: #0f172a;
-    border-bottom-color: #0f172a;
     font-weight: 500;
   }
 
