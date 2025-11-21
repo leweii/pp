@@ -306,9 +306,8 @@
       const hull = convexHull(points);
       if (hull.length < 3) return;
 
-      // Filter by edge count - skip if outside configured range
-      if (config.minEdges && hull.length < config.minEdges) return;
-      if (config.maxEdges && hull.length > config.maxEdges) return;
+      // Note: Edge count filtering removed to prevent gaps in coverage
+      // All polygons are now rendered regardless of edge count
 
       // Determine color - configurable chance for vibrant colors!
       const isColored = Math.random() < config.colorProb;
