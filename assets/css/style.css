@@ -16,11 +16,11 @@ html, body {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 1.6;
-  color: #000;
-  background: #fff;
+  line-height: 1.7;
+  color: #0f172a;
+  background: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -40,9 +40,10 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 40px 30px;
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
+  background: #fafafa;
 }
 
 /* Right Column - 2/3 width */
@@ -59,29 +60,24 @@ body {
 }
 
 .site-title {
-  font-size: 18px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
 }
 
 .site-title a,
 .site-title a:link,
 .site-title a:visited,
 .site-title a:active {
-  color: #1a1a1a;
+  color: #0f172a;
   text-decoration: none;
   position: relative;
   display: inline-block;
-  background-image: linear-gradient(to right, #8B7F8B 0%, #7A8B7F 100%);
-  background-size: 0% 2px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.2s ease;
 }
 
 .site-title a:hover {
-  color: #5A6B5F;
-  background-size: 100% 3px;
+  color: #64748b;
 }
 
 /* Project Navigation */
@@ -90,12 +86,12 @@ body {
 }
 
 .nav-title {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #666;
+  letter-spacing: 0.1em;
+  color: #64748b;
 }
 
 .project-list {
@@ -103,48 +99,62 @@ body {
 }
 
 .project-list li {
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .project-list a,
 .project-list a:link,
 .project-list a:visited,
 .project-list a:active {
-  color: #1a1a1a;
+  color: #334155;
   text-decoration: none;
-  font-size: 18px;
-  font-weight: 450;
+  font-size: 17px;
+  font-weight: 400;
   line-height: 1.6;
   display: inline-block;
   position: relative;
-  padding: 2px 0;
-  background-image: linear-gradient(to right, #7A8B7F 0%, #6B7280 100%);
-  background-size: 0% 2px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 4px 0;
   letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+
+.project-list a::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #0f172a;
+  transition: width 0.2s ease;
 }
 
 .project-list a:hover {
-  color: #5A6B5F;
-  background-size: 100% 5px;
-  transform: translateX(4px);
+  color: #0f172a;
+}
+
+.project-list a:hover::after {
+  width: 100%;
 }
 
 .project-list a.active {
-  color: #4A5B4F;
-  background-size: 100% 3px;
+  color: #0f172a;
   font-weight: 500;
+}
+
+.project-list a.active::after {
+  width: 100%;
+  height: 2px;
+  bottom: 1px;
 }
 
 /* Site Footer */
 .site-footer {
   margin-top: 50px;
   padding-top: 30px;
-  border-top: 1px solid #e0e0e0;
-  font-size: 12px;
-  color: #999;
+  border-top: 1px solid #e2e8f0;
+  font-size: 13px;
+  color: #94a3b8;
 }
 
 /* Gallery Grid */
@@ -172,27 +182,11 @@ body {
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.2s ease;
 }
 
 .gallery-item a:hover {
-  transform: scale(1.02);
-}
-
-.gallery-item a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 6px;
-  background: linear-gradient(to right, #7A8B7F 0%, #6B7280 100%);
-  transform: translateY(100%);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.gallery-item a:hover::after {
-  transform: translateY(0);
+  opacity: 0.9;
 }
 
 .gallery-item img {
@@ -245,26 +239,27 @@ body {
 }
 
 .post-title {
-  font-size: 28px;
-  font-weight: 500;
-  margin-bottom: 10px;
-  letter-spacing: -0.02em;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -0.025em;
+  color: #0f172a;
 }
 
 .post-date {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
-  color: #999;
-  margin-bottom: 20px;
-  letter-spacing: 0.01em;
+  color: #64748b;
+  margin-bottom: 24px;
+  letter-spacing: 0;
 }
 
 .post-description {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.7;
-  color: #333;
+  line-height: 1.75;
+  color: #334155;
   letter-spacing: -0.01em;
 }
 
@@ -276,22 +271,16 @@ body {
 .post-description a:link,
 .post-description a:visited,
 .post-description a:active {
-  color: #1a1a1a;
+  color: #0f172a;
   text-decoration: none;
   position: relative;
   display: inline;
-  background-image: linear-gradient(to right, #B8C5B8 0%, #A8B5B0 100%);
-  background-size: 100% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid #cbd5e1;
+  transition: border-color 0.2s ease;
 }
 
 .post-description a:hover {
-  color: #4A5B4F;
-  background-image: linear-gradient(to right, #7A8B7F 0%, #6B7280 100%);
-  background-size: 100% 5px;
-  padding-bottom: 2px;
+  border-bottom-color: #0f172a;
 }
 
 /* Progressive Image Loading with Blur Effect */
@@ -347,20 +336,30 @@ html {
   width: 8px;
 }
 
-.sidebar::-webkit-scrollbar-track,
-.content::-webkit-scrollbar-track {
-  background: #f5f5f5;
+.sidebar::-webkit-scrollbar-track {
+  background: #f1f5f9;
 }
 
-.sidebar::-webkit-scrollbar-thumb,
-.content::-webkit-scrollbar-thumb {
-  background: #ccc;
+.content::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
   border-radius: 4px;
 }
 
-.sidebar::-webkit-scrollbar-thumb:hover,
+.content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 .content::-webkit-scrollbar-thumb:hover {
-  background: #999;
+  background: #94a3b8;
 }
 
 /* Responsive Design - Mobile */
@@ -383,7 +382,7 @@ html {
     max-height: none;
     min-height: auto;
     border-right: none;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e2e8f0;
     padding: 0;
     overflow-y: visible;
     overflow-x: hidden;
@@ -391,14 +390,14 @@ html {
     align-items: stretch;
     position: sticky;
     top: 0;
-    background: #fff;
+    background: #fafafa;
     z-index: 100;
   }
 
   .site-header {
     margin-bottom: 0;
     padding: 15px 20px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e2e8f0;
     width: 100%;
     flex-shrink: 0;
   }
@@ -450,23 +449,25 @@ html {
     display: inline-block;
     padding: 14px 18px;
     font-size: 16px;
-    font-weight: 450;
+    font-weight: 400;
     letter-spacing: -0.01em;
-    color: #1a1a1a;
+    color: #334155;
     border-bottom: 2px solid transparent;
-    background-image: none;
-    background-size: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .project-list a::after {
+    display: none;
   }
 
   .project-list a:hover {
-    color: #5A6B5F;
-    border-bottom: 5px solid #7A8B7F;
+    color: #0f172a;
+    border-bottom-color: #cbd5e1;
   }
 
   .project-list a.active {
-    color: #4A5B4F;
-    border-bottom: 3px solid #6B7280;
+    color: #0f172a;
+    border-bottom-color: #0f172a;
     font-weight: 500;
   }
 
@@ -501,27 +502,11 @@ html {
     text-decoration: none;
     position: relative;
     overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.2s ease;
   }
 
   .gallery-item a:active {
-    transform: scale(0.98);
-  }
-
-  .gallery-item a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 6px;
-    background: linear-gradient(to right, #7A8B7F 0%, #6B7280 100%);
-    transform: translateY(100%);
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .gallery-item a:active::after {
-    transform: translateY(0);
+    opacity: 0.9;
   }
 
   .gallery-item img {
