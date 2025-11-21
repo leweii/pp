@@ -1,0 +1,418 @@
+---
+layout: default
+title: Background Debug
+permalink: /background-debug/
+---
+
+<style>
+.debug-panel {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.debug-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 30px;
+}
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.control-group {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.control-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.control-value {
+  color: #64748b;
+  font-family: 'Monaco', monospace;
+}
+
+.slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #cbd5e1;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0f172a;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0f172a;
+  cursor: pointer;
+  border: none;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: #0f172a;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1e293b;
+}
+
+.btn-secondary {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.btn-secondary:hover {
+  background: #cbd5e1;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.preview-area {
+  margin-top: 40px;
+  padding: 20px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  min-height: 400px;
+  position: relative;
+}
+
+.preview-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.status-message {
+  margin-top: 20px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: none;
+}
+
+.status-success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+}
+
+.status-info {
+  background: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #93c5fd;
+}
+</style>
+
+<div class="debug-panel">
+  <h1 class="debug-title">🎨 Background Debug Panel</h1>
+
+  <div class="controls-grid">
+    <div class="control-group">
+      <label class="control-label">
+        <span>Cell Size (Target Area)</span>
+        <span class="control-value" id="value-targetArea">70</span>
+      </label>
+      <input type="range" class="slider" id="targetArea" min="20" max="500" value="70" step="10">
+      <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+        Smaller = more dense cells
+      </p>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        <span>Color Probability (%)</span>
+        <span class="control-value" id="value-colorProb">0.8</span>
+      </label>
+      <input type="range" class="slider" id="colorProb" min="0" max="5" value="0.8" step="0.1">
+      <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+        Chance of colored blocks
+      </p>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        <span>Grid Size (Performance)</span>
+        <span class="control-value" id="value-gridSize">3</span>
+      </label>
+      <input type="range" class="slider" id="gridSize" min="1" max="10" value="3" step="1">
+      <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+        Higher = faster but less precise
+      </p>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        <span>Stroke Width</span>
+        <span class="control-value" id="value-strokeWidth">0.3</span>
+      </label>
+      <input type="range" class="slider" id="strokeWidth" min="0.1" max="2" value="0.3" step="0.1">
+      <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+        Crackle line thickness
+      </p>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        <span>Min Opacity</span>
+        <span class="control-value" id="value-minOpacity">0.015</span>
+      </label>
+      <input type="range" class="slider" id="minOpacity" min="0.005" max="0.1" value="0.015" step="0.005">
+      <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+        Minimum cell opacity
+      </p>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        <span>Max Opacity</span>
+        <span class="control-value" id="value-maxOpacity">0.04</span>
+      </label>
+      <input type="range" class="slider" id="maxOpacity" min="0.01" max="0.15" value="0.04" step="0.005">
+      <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+        Maximum cell opacity
+      </p>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        <span>Colored Opacity</span>
+        <span class="control-value" id="value-coloredOpacity">0.05</span>
+      </label>
+      <input type="range" class="slider" id="coloredOpacity" min="0.02" max="0.15" value="0.05" step="0.005">
+      <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+        Opacity for colored cells
+      </p>
+    </div>
+  </div>
+
+  <div class="button-group">
+    <button class="btn btn-primary" id="applyBtn">🎨 Apply & Preview</button>
+    <button class="btn btn-primary" id="saveBtn">💾 Save Configuration</button>
+    <button class="btn btn-secondary" id="resetBtn">🔄 Reset to Default</button>
+    <button class="btn btn-secondary" id="loadBtn">📂 Load Saved Config</button>
+    <button class="btn btn-danger" id="clearBtn">🗑️ Clear Saved Config</button>
+  </div>
+
+  <div class="status-message" id="statusMessage"></div>
+
+  <div class="preview-area">
+    <div class="preview-label">Preview (Body Background)</div>
+    <p style="color: #64748b; margin-bottom: 20px;">
+      Current screen: <span id="screenSize"></span> |
+      Estimated cells: <span id="cellCount"></span>
+    </p>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // Default configuration
+  const defaultConfig = {
+    targetArea: 70,
+    colorProb: 0.008,
+    gridSize: 3,
+    strokeWidth: 0.3,
+    minOpacity: 0.015,
+    maxOpacity: 0.04,
+    coloredOpacity: 0.05
+  };
+
+  let currentConfig = { ...defaultConfig };
+
+  // Update value displays
+  function updateValueDisplays() {
+    document.getElementById('value-targetArea').textContent = currentConfig.targetArea;
+    document.getElementById('value-colorProb').textContent = (currentConfig.colorProb * 100).toFixed(1);
+    document.getElementById('value-gridSize').textContent = currentConfig.gridSize;
+    document.getElementById('value-strokeWidth').textContent = currentConfig.strokeWidth.toFixed(1);
+    document.getElementById('value-minOpacity').textContent = currentConfig.minOpacity.toFixed(3);
+    document.getElementById('value-maxOpacity').textContent = currentConfig.maxOpacity.toFixed(3);
+    document.getElementById('value-coloredOpacity').textContent = currentConfig.coloredOpacity.toFixed(3);
+
+    // Update screen info
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const cellCount = Math.floor((width * height) / currentConfig.targetArea);
+    document.getElementById('screenSize').textContent = `${width}×${height}`;
+    document.getElementById('cellCount').textContent = cellCount.toLocaleString();
+  }
+
+  // Setup slider listeners
+  function setupSliders() {
+    const sliders = ['targetArea', 'colorProb', 'gridSize', 'strokeWidth', 'minOpacity', 'maxOpacity', 'coloredOpacity'];
+
+    sliders.forEach(key => {
+      const slider = document.getElementById(key);
+      slider.addEventListener('input', (e) => {
+        let value = parseFloat(e.target.value);
+        if (key === 'colorProb') {
+          value = value / 100; // Convert percentage to decimal
+        }
+        currentConfig[key] = value;
+        updateValueDisplays();
+      });
+    });
+  }
+
+  // Show status message
+  function showStatus(message, type = 'success') {
+    const statusEl = document.getElementById('statusMessage');
+    statusEl.textContent = message;
+    statusEl.className = `status-message status-${type}`;
+    statusEl.style.display = 'block';
+
+    setTimeout(() => {
+      statusEl.style.display = 'none';
+    }, 3000);
+  }
+
+  // Apply configuration and regenerate background
+  document.getElementById('applyBtn').addEventListener('click', () => {
+    if (window.applyBackgroundConfig) {
+      window.applyBackgroundConfig(currentConfig);
+      showStatus('✨ Background applied! Check the preview area and page background.', 'success');
+    }
+  });
+
+  // Save configuration
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    try {
+      localStorage.setItem('backgroundConfig', JSON.stringify(currentConfig));
+      showStatus('💾 Configuration saved successfully!', 'success');
+    } catch (e) {
+      showStatus('❌ Failed to save configuration: ' + e.message, 'error');
+    }
+  });
+
+  // Load saved configuration
+  document.getElementById('loadBtn').addEventListener('click', () => {
+    try {
+      const saved = localStorage.getItem('backgroundConfig');
+      if (saved) {
+        currentConfig = JSON.parse(saved);
+
+        // Update sliders
+        Object.keys(currentConfig).forEach(key => {
+          const slider = document.getElementById(key);
+          if (slider) {
+            if (key === 'colorProb') {
+              slider.value = currentConfig[key] * 100;
+            } else {
+              slider.value = currentConfig[key];
+            }
+          }
+        });
+
+        updateValueDisplays();
+        showStatus('📂 Configuration loaded!', 'info');
+      } else {
+        showStatus('ℹ️ No saved configuration found.', 'info');
+      }
+    } catch (e) {
+      showStatus('❌ Failed to load configuration: ' + e.message, 'error');
+    }
+  });
+
+  // Reset to default
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    currentConfig = { ...defaultConfig };
+
+    // Update sliders
+    document.getElementById('targetArea').value = defaultConfig.targetArea;
+    document.getElementById('colorProb').value = defaultConfig.colorProb * 100;
+    document.getElementById('gridSize').value = defaultConfig.gridSize;
+    document.getElementById('strokeWidth').value = defaultConfig.strokeWidth;
+    document.getElementById('minOpacity').value = defaultConfig.minOpacity;
+    document.getElementById('maxOpacity').value = defaultConfig.maxOpacity;
+    document.getElementById('coloredOpacity').value = defaultConfig.coloredOpacity;
+
+    updateValueDisplays();
+    showStatus('🔄 Reset to default configuration', 'info');
+  });
+
+  // Clear saved configuration
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    if (confirm('Are you sure you want to clear the saved configuration?')) {
+      localStorage.removeItem('backgroundConfig');
+      showStatus('🗑️ Saved configuration cleared', 'info');
+    }
+  });
+
+  // Initialize
+  setupSliders();
+  updateValueDisplays();
+
+  // Try to load saved config on page load
+  const saved = localStorage.getItem('backgroundConfig');
+  if (saved) {
+    currentConfig = JSON.parse(saved);
+    Object.keys(currentConfig).forEach(key => {
+      const slider = document.getElementById(key);
+      if (slider) {
+        if (key === 'colorProb') {
+          slider.value = currentConfig[key] * 100;
+        } else {
+          slider.value = currentConfig[key];
+        }
+      }
+    });
+    updateValueDisplays();
+    showStatus('📂 Loaded saved configuration', 'info');
+  }
+
+})();
+</script>
