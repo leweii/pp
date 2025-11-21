@@ -278,7 +278,23 @@ permalink: /background-debug/
     <button class="btn btn-danger" id="clearBtn">🗑️ Clear Saved Config</button>
   </div>
 
+  <div class="button-group" style="margin-top: 20px; border-top: 2px solid #e2e8f0; padding-top: 20px;">
+    <button class="btn btn-primary" id="exportBtn">📋 Export Config Code for Production</button>
+  </div>
+
   <div class="status-message" id="statusMessage"></div>
+
+  <div id="exportedCode" style="display: none; margin-top: 30px; background: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <h3 style="font-size: 16px; font-weight: 600; color: #0f172a; margin: 0;">📝 Production Config Code</h3>
+      <button class="btn btn-secondary" id="copyCodeBtn" style="padding: 8px 16px;">📋 Copy</button>
+    </div>
+    <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">
+      Copy this code and paste it into <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 3px;">assets/js/script.js</code>
+      to replace the <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 3px;">defaultBgConfig</code> object (around line 201).
+    </p>
+    <pre id="codeBlock" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 15px; overflow-x: auto; font-family: 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.6; color: #0f172a; margin: 0;"></pre>
+  </div>
 
   <div class="preview-area">
     <div class="preview-label">Preview (Body Background)</div>
@@ -436,6 +452,43 @@ permalink: /background-debug/
       localStorage.removeItem('backgroundConfig');
       showStatus('🗑️ Saved configuration cleared', 'info');
     }
+  });
+
+  // Export configuration code for production
+  document.getElementById('exportBtn').addEventListener('click', () => {
+    const code = `const defaultBgConfig = {
+  targetArea: ${currentConfig.targetArea},        // Pixels per cell (smaller = more dense)
+  colorProb: ${currentConfig.colorProb},        // ${(currentConfig.colorProb * 100).toFixed(1)}% chance of colored blocks
+  gridSize: ${currentConfig.gridSize},            // Sampling grid size for performance
+  strokeWidth: ${currentConfig.strokeWidth},        // Polygon border thickness
+  minOpacity: ${currentConfig.minOpacity},       // Minimum cell opacity
+  maxOpacity: ${currentConfig.maxOpacity},        // Maximum cell opacity
+  coloredOpacity: ${currentConfig.coloredOpacity},     // Colored cell opacity
+  relaxationIterations: ${currentConfig.relaxationIterations}, // Lloyd's relaxation iterations for uniform areas
+  minEdges: ${currentConfig.minEdges},            // Minimum polygon edges
+  maxEdges: ${currentConfig.maxEdges}             // Maximum polygon edges
+};`;
+
+    document.getElementById('codeBlock').textContent = code;
+    document.getElementById('exportedCode').style.display = 'block';
+    showStatus('📋 Configuration code generated! Scroll down to copy.', 'success');
+
+    // Scroll to the code block
+    setTimeout(() => {
+      document.getElementById('exportedCode').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  });
+
+  // Copy code to clipboard
+  document.getElementById('copyCodeBtn').addEventListener('click', () => {
+    const codeBlock = document.getElementById('codeBlock');
+    const code = codeBlock.textContent;
+
+    navigator.clipboard.writeText(code).then(() => {
+      showStatus('✅ Code copied to clipboard! Now paste it into assets/js/script.js', 'success');
+    }).catch(err => {
+      showStatus('❌ Failed to copy: ' + err.message, 'error');
+    });
   });
 
   // Initialize
