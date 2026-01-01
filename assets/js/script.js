@@ -199,16 +199,16 @@
    * Default background configuration
    */
   const defaultBgConfig = {
-    targetArea: 800,        // Increased for better performance (was 70)
-    colorProb: 0.008,
-    gridSize: 5,            // Increased for better performance (was 3)
-    strokeWidth: 0.3,
-    minOpacity: 0.015,
-    maxOpacity: 0.04,
-    coloredOpacity: 0.05,
-    relaxationIterations: 2, // Lloyd's relaxation iterations for uniform areas
+    targetArea: 2000,        // Pixels per cell (smaller = more dense)
+    colorProb: 0.038,        // 3.8% chance of colored blocks
+    gridSize: 15,            // Sampling grid size for performance
+    strokeWidth: 2,        // Polygon border thickness
+    minOpacity: 0.055,       // Minimum cell opacity
+    maxOpacity: 0.115,        // Maximum cell opacity
+    coloredOpacity: 0.15,     // Colored cell opacity
+    relaxationIterations: 0, // Lloyd's relaxation iterations for uniform areas
     minEdges: 4,            // Minimum polygon edges
-    maxEdges: 8             // Maximum polygon edges
+    maxEdges: 4             // Maximum polygon edges
   };
 
   /**
