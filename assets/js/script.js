@@ -543,10 +543,6 @@
    * Initialize all functionality
    */
   function init() {
-    // Generate random background immediately
-    // Now with Lloyd's relaxation and optimized defaults
-    initRandomBackground();
-
     // Register service worker for caching
     registerServiceWorker();
 
