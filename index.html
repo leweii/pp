@@ -15,6 +15,12 @@ title: Home
             class="lazy-image"
             loading="lazy"
           >
+          <figcaption class="gallery-caption">
+            <h3 class="gallery-title">{{ post.title }}</h3>
+            {% if post.excerpt %}
+            <p class="gallery-excerpt">{{ post.excerpt | strip_html | truncate: 80 }}</p>
+            {% endif %}
+          </figcaption>
         </a>
       </figure>
     {% endif %}
