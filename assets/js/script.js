@@ -161,6 +161,44 @@
   }
 
   /**
+   * Mobile menu toggle
+   */
+  function initMobileMenu() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const navLinks = document.querySelectorAll('.project-nav a');
+
+    if (!menuToggle || !sidebar) return;
+
+    // Toggle menu on button click
+    menuToggle.addEventListener('click', function() {
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !isExpanded);
+      sidebar.classList.toggle('menu-open');
+    });
+
+    // Close menu when clicking a nav link (mobile)
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 968) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          sidebar.classList.remove('menu-open');
+        }
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (window.innerWidth <= 968 && sidebar.classList.contains('menu-open')) {
+        if (!sidebar.contains(e.target)) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          sidebar.classList.remove('menu-open');
+        }
+      }
+    });
+  }
+
+  /**
    * Scroll active tab into view on mobile
    */
   function scrollActiveTabIntoView() {
@@ -520,6 +558,7 @@
         initNavigation();
         initPageTransition();
         initMobileScrolling();
+        initMobileMenu();
         scrollActiveTabIntoView();
       });
     } else {
@@ -528,6 +567,7 @@
       initNavigation();
       initPageTransition();
       initMobileScrolling();
+      initMobileMenu();
       scrollActiveTabIntoView();
     }
   }
